@@ -41,15 +41,17 @@
                      <div class="card-body">
                        <label class="card-text">Cantidad : <span class="text-muted">Kg.</span> </label>
                        <div class="input-group mb-3">
-                            <input type="number" class="form-control form-control-sm" placeholder="Ingrese cantidad">                           
+                            <input type="number" class="form-control form-control-sm" placeholder="Ingrese cantidad" id="cantidad">                           
                         </div>
-                       <button type="button" class="btn btn-danger btn-block" id="btnAgregar">Añadir al Carrito</button>
+                       <button type="button" class="btn btn-danger btn-block" id="btnAgregar" value="@Model.PkProducto">Añadir al Carrito</button>
                      </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<div id="modal-container"></div> <!-- Contenedor del Modal-->
 @section Scripts {
+    <script src="~/js/site.js"> </script>
     <script src="/js/Producto/_AgregarCarrito.js"></script>
 }

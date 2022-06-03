@@ -38,6 +38,17 @@ namespace WebVentas.Controllers
             }
             return PartialView("_VerDetalleProducto", product);
         }
+        public IActionResult AgregarCarritoCompra(int id, int? cantidad = 0)
+        {
+            Producto product = null;
+            if (id != 0)
+            {
+                product = new Producto();
+                product = _Ps.GetById(id);
+                if(cantidad != 0) { product.Cantidad = cantidad; }      
+            }
+            return PartialView("_AgregarCarrito", product);
+        }
         [HttpGet]
         public IActionResult GetProducto(int id)
         {
