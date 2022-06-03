@@ -60,7 +60,7 @@
 
             btnAgregar[i].addEventListener("click", function (e) {
                 e.preventDefault();
-                alert(btnAgregar[i].value);
+                window.location.href = `/Producto/Ver?id=${btnAgregar[i].value}`;
             });
 
         });
