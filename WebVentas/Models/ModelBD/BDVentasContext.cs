@@ -19,10 +19,14 @@ namespace WebVentas.Models.ModelBD
 
         public virtual DbSet<Categorium> Categoria { get; set; }
         public virtual DbSet<Contacto> Contactos { get; set; }
+        public virtual DbSet<DetalleVentum> DetalleVenta { get; set; }
         public virtual DbSet<Producto> Productos { get; set; }
         public virtual DbSet<Proveedor> Proveedors { get; set; }
+        public virtual DbSet<Rol> Rols { get; set; }
         public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
         public virtual DbSet<UnidadMedidum> UnidadMedida { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Ventum> Venta { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -135,6 +139,33 @@ namespace WebVentas.Models.ModelBD
                     .WithMany(p => p.Contactos)
                     .HasForeignKey(d => d.FkTipoDocumento)
                     .HasConstraintName("FK_Contacto_TipoDocumento");
+            });
+
+            modelBuilder.Entity<DetalleVentum>(entity =>
+            {
+                entity.HasKey(e => e.PkDetalle);
+
+                entity.Property(e => e.PkDetalle).HasColumnName("pkDetalle");
+
+                entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+
+                entity.Property(e => e.FkProducto).HasColumnName("fkProducto");
+
+                entity.Property(e => e.FkUnidad).HasColumnName("fkUnidad");
+
+                entity.Property(e => e.FkVenta).HasColumnName("fkVenta");
+
+                entity.Property(e => e.IsDeleted)
+                    .HasColumnName("isDeleted")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.PrecioUnidad)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("precioUnidad");
+
+                entity.Property(e => e.SubTotal)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("subTotal");
             });
 
             modelBuilder.Entity<Producto>(entity =>
@@ -287,6 +318,20 @@ namespace WebVentas.Models.ModelBD
                     .HasConstraintName("FK_Proveedor_TipoDocumento");
             });
 
+            modelBuilder.Entity<Rol>(entity =>
+            {
+                entity.HasKey(e => e.PkRol);
+
+                entity.ToTable("Rol");
+
+                entity.Property(e => e.PkRol).HasColumnName("pkRol");
+
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("descripcion");
+            });
+
             modelBuilder.Entity<TipoDocumento>(entity =>
             {
                 entity.HasKey(e => e.PkTipoDocumento);
@@ -316,6 +361,150 @@ namespace WebVentas.Models.ModelBD
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("descripcion");
+            });
+
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.HasKey(e => e.PkUsuario);
+
+                entity.ToTable("Usuario");
+
+                entity.Property(e => e.PkUsuario).HasColumnName("pkUsuario");
+
+                entity.Property(e => e.ApellidoMaterno)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("apellidoMaterno");
+
+                entity.Property(e => e.ApellidoPaterno)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("apellidoPaterno");
+
+                entity.Property(e => e.Direccion)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("direccion");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.FechaCrea)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaCrea");
+
+                entity.Property(e => e.FechaEdita)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaEdita");
+
+                entity.Property(e => e.FkRol).HasColumnName("fkRol");
+
+                entity.Property(e => e.FkTipoDocumento).HasColumnName("fkTipoDocumento");
+
+                entity.Property(e => e.FkUsuarioCrea).HasColumnName("fkUsuarioCrea");
+
+                entity.Property(e => e.FkUsuarioEdita).HasColumnName("fkUsuarioEdita");
+
+                entity.Property(e => e.IsDeleted)
+                    .HasColumnName("isDeleted")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("nombre");
+
+                entity.Property(e => e.NroDocumento)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("nroDocumento");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("telefono");
+
+                entity.Property(e => e.Ubigeo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("ubigeo");
+            });
+
+            modelBuilder.Entity<Ventum>(entity =>
+            {
+                entity.HasKey(e => e.PkVenta);
+
+                entity.Property(e => e.PkVenta).HasColumnName("pkVenta");
+
+                entity.Property(e => e.Codigo)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("codigo");
+
+                entity.Property(e => e.Direccion)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("direccion");
+
+                entity.Property(e => e.Estado).HasColumnName("estado");
+
+                entity.Property(e => e.FechaCrea)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaCrea");
+
+                entity.Property(e => e.FechaEdita)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaEdita");
+
+                entity.Property(e => e.FechaEntrega)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaEntrega");
+
+                entity.Property(e => e.FechaRegistro)
+                    .HasColumnType("datetime")
+                    .HasColumnName("fechaRegistro");
+
+                entity.Property(e => e.FkUsuario).HasColumnName("fkUsuario");
+
+                entity.Property(e => e.FkUsuarioCrea).HasColumnName("fkUsuarioCrea");
+
+                entity.Property(e => e.FkUsuarioEdita).HasColumnName("fkUsuarioEdita");
+
+                entity.Property(e => e.Igv)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("igv");
+
+                entity.Property(e => e.IsDeleted)
+                    .HasColumnName("isDeleted")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.IsDelivery).HasColumnName("isDelivery");
+
+                entity.Property(e => e.Observacion)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("observacion");
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(9)
+                    .IsUnicode(false)
+                    .HasColumnName("telefono");
+
+                entity.Property(e => e.Total)
+                    .HasColumnType("decimal(16, 2)")
+                    .HasColumnName("total");
+
+                entity.Property(e => e.Ubigeo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("ubigeo");
             });
 
             OnModelCreatingPartial(modelBuilder);
