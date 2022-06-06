@@ -7,6 +7,11 @@ namespace WebVentas.Models.ModelBD
 {
     public partial class Usuario
     {
+        public Usuario()
+        {
+            Venta = new HashSet<Ventum>();
+        }
+
         public int PkUsuario { get; set; }
         public int? FkTipoDocumento { get; set; }
         public string NroDocumento { get; set; }
@@ -24,5 +29,8 @@ namespace WebVentas.Models.ModelBD
         public int? FkUsuarioEdita { get; set; }
         public DateTime? FechaEdita { get; set; }
         public bool? IsDeleted { get; set; }
+
+        public virtual Rol FkRolNavigation { get; set; }
+        public virtual ICollection<Ventum> Venta { get; set; }
     }
 }

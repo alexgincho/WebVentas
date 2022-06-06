@@ -15,5 +15,8 @@ namespace WebVentas.Models.ModelBD
         public int? FkUnidad { get; set; }
         public decimal? SubTotal { get; set; }
         public bool? IsDeleted { get; set; }
+
+        public virtual Producto FkProductoNavigation { get; set; }
+        public virtual Ventum FkVentaNavigation { get; set; }
     }
 }

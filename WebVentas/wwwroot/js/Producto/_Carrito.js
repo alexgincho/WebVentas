@@ -1,5 +1,6 @@
 ﻿window.onload = function () {
 
+    let btnProcesas = document.getElementById("btnProcesas");
     let TableCarritoCompras = $("#TableCarritoCompras");
 
     let DataTableCarritoCompras = TableCarritoCompras.DataTable({
@@ -16,9 +17,6 @@
             //{ "targets": 3, "width": "10%" },
         ]
     });
-
-
-
 
     function RecuperarDatosLocalStorage() {
         let ArrayProductos = [];
@@ -53,6 +51,12 @@
         subTotals.textContent = " S/" + subTotal;
         Totals.textContent = " S/" + subTotal;
     }
+
+    btnProcesas.addEventListener("click", function (e) {
+        e.preventDefault();
+        window.location.href = '/Login/';
+    });
+
     ActualizarDatosVenta();
     RecuperarDatosLocalStorage();
 };

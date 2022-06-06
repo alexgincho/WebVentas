@@ -7,10 +7,16 @@ namespace WebVentas.Models.ModelBD
 {
     public partial class Producto
     {
+        public Producto()
+        {
+            DetalleVenta = new HashSet<DetalleVentum>();
+        }
+
         public int PkProducto { get; set; }
         public string Codigo { get; set; }
         public string NombreProducto { get; set; }
         public string Descripcion { get; set; }
+        public string Imagen { get; set; }
         public decimal? Cantidad { get; set; }
         public int? FkUnidad { get; set; }
         public decimal? PrecioCompra { get; set; }
@@ -28,5 +34,6 @@ namespace WebVentas.Models.ModelBD
         public virtual Categorium FkCategoriaNavigation { get; set; }
         public virtual Proveedor FkProveedorNavigation { get; set; }
         public virtual UnidadMedidum FkUnidadNavigation { get; set; }
+        public virtual ICollection<DetalleVentum> DetalleVenta { get; set; }
     }
 }
