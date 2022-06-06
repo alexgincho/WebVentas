@@ -3,11 +3,23 @@ using WebVentas.Models.Interfaces;
 using WebVentas.Models.ModelBD;
 using WebVentas.Models.ModelVista.request;
 using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using WebVentas.Models.Common;
+using Microsoft.Extensions.Options;
+using WebVentas.Models.ModelVista.response;
 
 namespace WebVentas.Models.Services
 {
     public class UsuarioService : IUsuarioService
     {
+        private readonly AppSettings _appSettings;
+        public UsuarioService(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
         public Usuario Crear(Usuario user)
         {
             Usuario result = null;
@@ -45,18 +57,18 @@ namespace WebVentas.Models.Services
             return result;
         }
 
-        public Usuario Login(LoginRequest user)
+        public UsuarioResponse Auth(LoginRequest user)
         {
-            Usuario result = null;
+            UsuarioResponse result = null;
             try
             {
                 using (var db = new BDVentasContext())
                 {
                     var usuario = db.Usuarios.Where(u=>u.Email == user.Email && u.Password == user.Password && u.IsDeleted == false).FirstOrDefault();
-                    if (usuario != null)
-                    {
-                        result = usuario;
-                    }else { throw new Exception(); }
+                    if (usuario == null) return null;
+                    result.Usuario = usuario;
+                    result.Email = usuario.Email;
+                    result.Token = GetToken(usuario);
                 }
             }
             catch (Exception ex)
@@ -65,6 +77,26 @@ namespace WebVentas.Models.Services
             }
             return result;
         }
+        private string GetToken(Usuario usuario)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
 
+            var llave = Encoding.ASCII.GetBytes(_appSettings.Secreto);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(
+                    new Claim[]
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, usuario.PkUsuario.ToString()),
+                        new Claim(ClaimTypes.Email, usuario.Email)
+                    }
+                    ),
+                Expires = DateTime.UtcNow.AddDays(60),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(llave), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
     }
 }
