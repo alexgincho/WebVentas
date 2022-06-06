@@ -45,9 +45,14 @@ namespace WebVentas.Controllers
             {
                 product = new Producto();
                 product = _Ps.GetById(id);
-                if(cantidad != 0) { product.Cantidad = cantidad; }      
+                if(cantidad == 0) { product.Cantidad = cantidad; }
+                else { product.Cantidad = cantidad; }
             }
             return PartialView("_AgregarCarrito", product);
+        }
+        public IActionResult Carrito()
+        {
+            return View();
         }
         [HttpGet]
         public IActionResult GetProducto(int id)

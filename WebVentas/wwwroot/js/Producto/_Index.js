@@ -1,6 +1,7 @@
 ﻿window.onload = function () {
 
     let content_card = document.getElementsByClassName("content-card");
+    let contCarrito = document.getElementById("cont-carrito");
 
     function ObtenerProductos() {
 
@@ -91,6 +92,18 @@
     function InvocarModal(id) {
         AbrirModal(`/Producto/VerDetalle/${id ? id : ""}`);
     }
+    function MostrarCantidad() {
+        let StorageProducto = [];
+        StorageProducto = JSON.parse(localStorage.getItem("Producto"));
+        console.log(StorageProducto);
+        if (StorageProducto != null) {
+            contCarrito.textContent = StorageProducto.length;
+        }
+        else {
+            contCarrito.textContent = 0;
+        }
+    }
     ObtenerProductos();
+    MostrarCantidad();
    
 };
