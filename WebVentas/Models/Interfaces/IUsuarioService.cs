@@ -6,5 +6,6 @@ namespace WebVentas.Models.Interfaces
     public interface IUsuarioService
     {
         public Usuario Login(LoginRequest user);
+        public Usuario Crear(Usuario user);
     }
 }

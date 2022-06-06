@@ -26,6 +26,8 @@ namespace WebVentas
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProductoService,ProductoService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IRolService, RolService>();
 
             services.AddControllersWithViews();
         }
