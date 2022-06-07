@@ -29,6 +29,7 @@ namespace WebVentas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             var appSettingSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingSection);
 
@@ -54,6 +55,7 @@ namespace WebVentas
             services.AddScoped<IProductoService,ProductoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IRolService, RolService>();
+            services.AddScoped<IVentaService,VentaService>();
 
             services.AddControllersWithViews();
         }
@@ -73,7 +75,7 @@ namespace WebVentas
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

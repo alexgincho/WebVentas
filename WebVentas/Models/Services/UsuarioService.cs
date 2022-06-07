@@ -64,11 +64,16 @@ namespace WebVentas.Models.Services
             {
                 using (var db = new BDVentasContext())
                 {
+
                     var usuario = db.Usuarios.Where(u=>u.Email == user.Email && u.Password == user.Password && u.IsDeleted == false).FirstOrDefault();
-                    if (usuario == null) return null;
-                    result.Usuario = usuario;
-                    result.Email = usuario.Email;
-                    result.Token = GetToken(usuario);
+                    if (usuario == null) { return null; }
+                    else
+                    {
+                        result = new UsuarioResponse();
+                        result.Usuario = usuario;
+                        result.Email = usuario.Email;
+                        result.Token = GetToken(usuario);
+                    }
                 }
             }
             catch (Exception ex)

@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@using WebVentas.Models.Common
+@using WebVentas.Models.ModelBD;
+@{
+    var Usuario = SessionHelper.GetObjectFromJson<Usuario>(Context.Session, "Usuario");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -41,12 +48,6 @@
                             <a href="/about-us" title="About Us" class="level-1 trsn nav-link">About Us</a>
                         </li>
                         <li class="nav-item  ">
-                            <a href="/about-us" title="About Us" class="level-1 trsn nav-link">About Us</a>
-                        </li>
-                        <li class="nav-item  ">
-                            <a href="/about-us" title="About Us" class="level-1 trsn nav-link">About Us</a>
-                        </li>
-                        <li class="nav-item  ">
                             <a href="/blog" title="Blog" class="level-1 trsn nav-link">Blog</a>
                         </li>
                         <li class="nav-item  ">
@@ -68,13 +69,24 @@
                                 <span id="nav-bar-cart"><span class="cart-size" id="cont-carrito">0</span> Producto(s)</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="/customer/login" id="login-link" class="trsn nav-link" title="Login toBootstrap">
-                                <i class="fas fa-user"></i>
-                                <span class="customer-name">
-                                    Login
-                                </span>
+                        <!-- LOGIN SESSION -->
+                       <li class="dropdown">
+                            <a href="#" class="dropdown-toggle trsn nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span><i class="fa fa-user"></i></span>
+                                <span>Iniciar Sesion</span>
+                                <span class="caret"></span>
                             </a>
+                            <ul class="dropdown-menu">
+                                @if(Usuario != null && Usuario.FkRol == 2 )
+                                {
+                                    <li> <span class="trsn nav-link" > @Usuario.Nombre  @Usuario.ApellidoPaterno </span> </li>
+                                    <li><a href="#" class="trsn nav-link" title="Iniciar Sesion">Logout</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="#" class="trsn nav-link" title="Iniciar Sesion">Iniciar Sesion</a></li>
+                                }
+                            </ul>
                         </li>
                     </ul>
 

@@ -1,0 +1,81 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model WebVentas.Models.ModelBD.Ventum
+<style>
+    #TableCarritoCompras {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+</style>
+<div class="row">
+    <form asp-action="MantenimientoVenta" asp-controller="Venta" method="post">
+        <div class="row">
+            <div class="col-md-9">
+                <nav>
+                    <div class="nav nav-tabs nav-pills flex-column flex-sm-row" id="nav-tab" role="tablist">
+                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Datos Cliente</a>
+                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Metodo de Pago</a>
+                        <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Mis Productos</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    </div>
+                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6 class="text-muted font-weight-bold mt-3">DETALLE DE COMPRAS</h6>
+                                <table class="table table-sm" id="TableCarritoCompras" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Codigo</th>
+                                            <th scope="col">Foto</th>
+                                            <th scope="col">Descripcion</th>
+                                            <th scope="col">Precio Uni</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Unidad Medida</th>
+                                            <th scope="col">Sub. Total</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-muted font-weight-bold">RESUMEN DE TU PEDIDO</h5>
+                <hr />
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h6 class="card-title list-group-item"><span class="text-muted font-weight-bold">Sub Total :</span> <span id="subTotal"></span> </h6>
+
+                        <h6 class="card-subtitle mb-2 text-muted font-weight-bold list-group-item">Envio : <span id="Envios">S/ 00.00</span></h6>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <a href="#" class="card-link text-orange font-weight-bold">Calcular Envio</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="#" class="card-link text-orange font-weight-bold">Aplicar Cupon</a>
+                            </li>
+                            <li class="list-group-item justify-content-end">
+                                <span class="text-muted font-weight-bold">TOTAL:</span><span class="text-muted font-weight-bold" id="Totals"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-block btn-primary" type="submit" id="btnProcesas"><span class="text-muted font-weight-bold"></span> PAGAR </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+<script src="/js/Ventas/_Ventas.js"></script>
+}
