@@ -22,6 +22,10 @@ namespace WebVentas.Controllers
         {
             return View();
         }
+        public IActionResult Contactanos()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

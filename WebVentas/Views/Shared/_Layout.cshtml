@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="~/dashboard-admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
     <link rel="stylesheet" href="~/dashboard-admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
     <link rel="stylesheet" href="~/lib/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
+
+    @* Estilos de la pagina de contactanos*@
+    <link href="~/assets/css/style.css" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -45,13 +49,13 @@
                     </form>
                     <ul class="nav navbar-nav float-left nav-top">
                         <li class="nav-item  ">
-                            <a href="/about-us" title="Inicio" class="level-1 trsn nav-link">Inicio</a>
+                            <a asp-controller="Home" asp-action="Index" title="Inicio" class="level-1 trsn nav-link">Inicio</a>
                         </li>
                         <li class="nav-item  ">
-                            <a href="/blog" title="Productos" class="level-1 trsn nav-link">Productos</a>
+                            <a asp-controller="Producto" asp-action="Index" title="Productos" class="level-1 trsn nav-link">Productos</a>
                         </li>
                         <li class="nav-item  ">
-                            <a href="/" title="Contáctanos" class="level-1 trsn nav-link">Contáctanos</a>
+                            <a asp-controller="Home" asp-action="Contactanos" title="Contáctanos" class="level-1 trsn nav-link">Contáctanos</a>
                         </li>
                         @*<li class="dropdown">
                             <a href="#" class="dropdown-toggle trsn nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +68,7 @@
                             </ul>
                         </li>*@
                         <li>
-                            <a id="cart-link" href="#" class="trsn nav-link" title="">
+                            <a id="cart-link" asp-controller="Producto" asp-action="Carrito" class="trsn nav-link" title="">
                                 <i class="fas fa-shopping-cart"></i>
                                 <span id="nav-bar-cart"><span class="cart-size" id="cont-carrito">0</span> Carrito</span>
                             </a>
@@ -84,7 +88,8 @@
                                 }
                                 else
                                 {
-                                    <li><a href="#" class="trsn nav-link" title="Iniciar Sesion">Iniciar Sesion</a></li>
+                                    <li><a asp-controller="Login" asp-action="Index" class="trsn nav-link" title="Iniciar Sesion">Iniciar Sesion</a></li>
+
                                 }
                             </ul>
                         </li>
