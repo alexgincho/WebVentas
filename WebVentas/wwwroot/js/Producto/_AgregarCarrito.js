@@ -109,6 +109,9 @@
                 $('#modal-container').html(data).find('.modal').modal({
                     show: true
                 });
+            },
+            error: function (error) {
+                console.log(error);
             }
         });
     };

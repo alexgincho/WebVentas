@@ -54,5 +54,28 @@ namespace WebVentas.Controllers
             }
             return Ok(rpta);
         }
+        [HttpGet]
+        public IActionResult GetUsuario(int id)
+        {
+            ResponseData rpta = new ResponseData();
+            try
+            {
+                var user = _User.Get(id);
+                if (user != null)
+                {
+                    rpta.Success = true;
+                    rpta.Message = "Ok";
+                    rpta.Data = user;
+                }
+                else { throw new Exception(); }
+            }
+            catch (Exception ex)
+            {
+                rpta.Success = false;
+                rpta.Message = ex.Message;
+                rpta.Data = null;
+            }
+            return Ok(rpta);
+        }
     }
 }

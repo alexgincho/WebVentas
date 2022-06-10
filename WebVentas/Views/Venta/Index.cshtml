@@ -1,6 +1,12 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Http;
+@using WebVentas.Models.Common
+@using WebVentas.Models.ModelBD;
+@{
+    var usuario = SessionHelper.GetObjectFromJson<Usuario>(Context.Session, "Usuario");
+}
 @model WebVentas.Models.ModelBD.Ventum
 <style>
     #TableCarritoCompras {
@@ -9,7 +15,8 @@
     }
 </style>
 <div class="row">
-    <form asp-action="MantenimientoVenta" asp-controller="Venta" method="post">
+    <form id="FormVentas" asp-action="MantenimientoVenta" asp-controller="Venta" method="post">
+        <input type="hidden" value="@usuario.PkUsuario" asp-for="FkUsuario" />
         <div class="row">
             <div class="col-md-9">
                 <nav>
@@ -21,6 +28,62 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="">Nombre</label>
+                                <input type="text" class="form-control form-control-sm" value="@usuario.Nombre" disabled />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="">Apellido Paterno</label>
+                                <input type="text" class="form-control form-control-sm" value="@usuario.ApellidoPaterno" disabled />
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="">Apellido Paterno</label>
+                                <input type="text" class="form-control form-control-sm" value="@usuario.ApellidoMaterno" disabled />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-10">
+                                <label for="">Direccion</label>
+                                <input type="text" class="form-control form-control-sm" value="@usuario.Direccion" asp-for="Direccion" />
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="">Telefono</label>
+                                <input type="text" class="form-control form-control-sm" value="@usuario.Telefono" asp-for="Telefono" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="">Departamento</label>
+                                <select class="form-control form-control-sm" id="Departamento">
+                                    <option value="Lima">Lima </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="">Provincia</label>
+                                <select class="form-control form-control-sm" id="Provincia">
+                                    <option value="Lima">Lima </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="">Distrito</label>
+                                <select class="form-control form-control-sm" id="Distrito">
+                                    <option value="Lima">Lima </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" asp-for="IsDelivery">
+                                    <label class="form-check-label" for="gridCheck">
+                                        Delivery?
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4"> </div>
+                            <div class="form-group col-md-4"> </div>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                     </div>
@@ -53,7 +116,9 @@
                 <hr />
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h6 class="card-title list-group-item"><span class="text-muted font-weight-bold">Sub Total :</span> <span id="subTotal"></span> </h6>
+                        <input type="hidden" id="inputSubtotal_spam" />
+                        <input type="hidden" asp-for="Total" id="inputTotal_spam" />
+                        <h6 class="card-title list-group-item"><span class="text-muted font-weight-bold">Sub Total :</span> <span id="subTotal"> </span> </h6>
 
                         <h6 class="card-subtitle mb-2 text-muted font-weight-bold list-group-item">Envio : <span id="Envios">S/ 00.00</span></h6>
                         <ul class="list-group list-group-flush">
@@ -64,12 +129,12 @@
                                 <a href="#" class="card-link text-orange font-weight-bold">Aplicar Cupon</a>
                             </li>
                             <li class="list-group-item justify-content-end">
-                                <span class="text-muted font-weight-bold">TOTAL:</span><span class="text-muted font-weight-bold" id="Totals"></span>
+                                <span class="text-muted font-weight-bold">TOTAL:</span><span class="text-muted font-weight-bold" id="Totals">  </span>
                             </li>
                         </ul>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-sm btn-block btn-primary" type="submit" id="btnProcesas"><span class="text-muted font-weight-bold"></span> PAGAR </button>
+                        <button class="btn btn-sm btn-block btn-primary" type="submit" id="btnProcesar"><span class="text-muted font-weight-bold"></span> PAGAR </button>
                     </div>
                 </div>
             </div>

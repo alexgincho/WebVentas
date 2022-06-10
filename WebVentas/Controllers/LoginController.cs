@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using WebVentas.Models.Common;
 using WebVentas.Models.Interfaces;
@@ -13,6 +14,8 @@ namespace WebVentas.Controllers
 
         private readonly IUsuarioService _User;
         private readonly IRolService _Rols;
+
+        private string Token = "";
 
         public LoginController(IUsuarioService user, IRolService role)
         {
@@ -38,7 +41,9 @@ namespace WebVentas.Controllers
                 {
                     Usuario usuario = new Usuario();
                     usuario = user.Usuario;
+                    Token = user.Token;
                     SessionHelper.SetObjectAsJson(HttpContext.Session, "Usuario",usuario);
+                    HttpContext.Session.SetString("token",Token);
                     rpta.Success = true; rpta.Message = "Ok"; rpta.Data = user;
                 }
                 else

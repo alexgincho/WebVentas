@@ -103,5 +103,28 @@ namespace WebVentas.Models.Services
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        public Usuario Get(int id)
+        {
+            Usuario user = null;
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var usuario = db.Usuarios.Where(u=>u.PkUsuario == id).FirstOrDefault();
+                    if (usuario == null) { return null; }
+                    else
+                    {
+                        user = new Usuario();
+                        user = usuario;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return user;
+        }
     }
 }

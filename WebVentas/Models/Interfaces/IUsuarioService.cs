@@ -8,5 +8,6 @@ namespace WebVentas.Models.Interfaces
     {
         public UsuarioResponse Auth(LoginRequest user);
         public Usuario Crear(Usuario user);
+        public Usuario Get(int id);
     }
 }

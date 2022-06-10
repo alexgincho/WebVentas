@@ -18,7 +18,7 @@ namespace WebVentas.Models.ModelBD
         public string Ubigeo { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }
-        public bool? IsDelivery { get; set; }
+        public bool IsDelivery { get; set; }
         public int? Estado { get; set; }
         public DateTime? FechaRegistro { get; set; }
         public DateTime? FechaEntrega { get; set; }
