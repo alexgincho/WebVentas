@@ -1,0 +1,76 @@
+﻿@model WebVentas.Models.ModelBD.Producto
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Registrar Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="formProducto">
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="col">
+                            <label asp-for="NombreProducto">Nombre Producto</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Nombre" asp-for="NombreProducto" autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <label>Codigo</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Codigo" asp-for="Codigo" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Descripcion</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="Descripcion de producto" asp-for="Descripcion" autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <label>Precio de Venta</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="Precio de Venta" asp-for="PrecioVenta" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Precio de Compra</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="Precio de Compra" asp-for="PrecioCompra" autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <label>Cantidad</label>
+                            <input type="number" class="form-control form-control-sm" placeholder="Cantidad" asp-for="Cantidad" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Categoria</label>
+                            <select class="form-control form-control-sm" asp-for="FkCategoria">
+
+                                @foreach (var Cat in ViewBag.Categorias)
+                                {
+                                    <option value="@Cat.PkCategoria"> @Cat.Descripcion </option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Fecha de Vencimiento</label>
+                            <input type="date" class="form-control form-control-sm" placeholder="Fecha de Vencimiento" asp-for="FechaVencimiento" autocomplete="off">
+                        </div>
+                        <div class="col">
+                            <label>Imagen</label>
+                            <input type="text" class="form-control form-control-sm" placeholder="URL de imagen" asp-for="Imagen" autocomplete="off">
+                        </div>
+                        <br />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btnRegistrarProducto" >Registrar Producto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,48 @@ namespace WebVentas.Models.Services
 {
     public class ProductoService : IProductoService
     {
+        public Producto Crear(Producto producto)
+        {
+            Producto productos = null;
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    db.Productos.Add(producto);
+                    db.SaveChanges();
+                    productos = new Producto();
+                    productos = producto;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return productos;
+        }
+
+        public List<Categorium> GetAllCategorias()
+        {
+            List<Categorium> categorias = null;
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var Lst = db.Categoria.ToList();
+                    if(Lst.Count > 0)
+                    {
+                        categorias = new List<Categorium>();
+                        categorias = Lst;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return categorias;
+        }
+
         public List<Producto> GetAllProductos()
         {
             List<Producto> products = null;
