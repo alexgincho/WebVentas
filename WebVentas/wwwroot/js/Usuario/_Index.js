@@ -10,10 +10,12 @@ $(document).ready(function () {
             "Telefono": $("#Telefono").val(),
             "Direccion": $("#Direccion").val(),
             "Email": $("#Email").val(),
-            "Passwords": $("#Passwords").val(),
-            "NroDocumento": $("#NroDocumento").val()
+            "Password": $("#Password-c").val(),
+            "NroDocumento": $("#NroDocumento").val(),
+            "FkTipoDocumento": 1,
+            "FkRol": 2
         }
-
+        console.log(Personal)
         Swal.fire({
             title: 'Desea Registrar a este Personal?',
             showDenyButton: true,
@@ -23,23 +25,21 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/Usuario/MantenimientoUsuario/Crear',
+                    url: '/Usuario/MantenimientoUsuario',
                     data: JSON.stringify(Personal),
                     type: 'POST',
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
-                        if (data.state == 200) {
+                        if (data.success) {
                             console.log(data);
-                            Swal.fire('Saved!', '', 'success')
-                            $('#modal-default').modal('hide');
-                             DataTablePersonal.ajax.reload();
+                            Swal.fire('Saved!', '', 'success');
+                            window.location.href = '/Home/Index'
                         }
-                        else if (data.state == 404) {
+                        else {
                             console.log(data);
                             Swal.fire(`Upss! ${data.message}`, '', 'info')
-                            $('#modal-default').modal('hide');
                         }
                     },
                     error: function (error) {

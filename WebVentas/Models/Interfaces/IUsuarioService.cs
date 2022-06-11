@@ -16,6 +16,5 @@ namespace WebVentas.Models.Interfaces
         public Usuario Get(int id);
         public Usuario Update(Usuario entity);
         public bool Delete(int id);
-        public Usuario Get(int id);
     }
 }
