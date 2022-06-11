@@ -77,13 +77,18 @@
                        <li class="dropdown">
                             <a href="#" class="dropdown-toggle trsn nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <span><i class="fa fa-user"></i></span>
-                                <span>Iniciar Sesion</span>
+                                @if(Usuario != null && Usuario.FkRol == 2)
+                                {
+                                    <span>@Usuario.Nombre  @Usuario.ApellidoPaterno</span>
+                                }
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 @if(Usuario != null && Usuario.FkRol == 2 )
                                 {
-                                    <li> <span class="trsn nav-link" > @Usuario.Nombre  @Usuario.ApellidoPaterno </span> </li>
+                                    @*<li> <span class="trsn nav-link" > @Usuario.Nombre  @Usuario.ApellidoPaterno </span> </li>*@
+                                    <li><a href="#" class="trsn nav-link" title="Iniciar Sesion">Mi Cuenta</a></li>
+                                    <li><a href="#" class="trsn nav-link" title="Iniciar Sesion">Mis Compras</a></li>
                                     <li><a href="#" class="trsn nav-link" title="Iniciar Sesion">Logout</a></li>
                                 }
                                 else

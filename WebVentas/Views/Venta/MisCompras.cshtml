@@ -1,0 +1,89 @@
+﻿@using Microsoft.AspNetCore.Http;
+@using WebVentas.Models.Common
+@using WebVentas.Models.ModelBD;
+@{
+    var Usuario = SessionHelper.GetObjectFromJson<Usuario>(Context.Session, "Usuario");
+}
+@model List<WebVentas.Models.ModelBD.Ventum>
+<style>
+    #TableVentas {
+        white-space: nowrap;
+        overflow-x: auto;
+    }
+</style>
+@if(Usuario != null)
+{
+    <input type="hidden" value="@Usuario.PkUsuario" id="session" />
+}
+else
+{
+    <input type="hidden" value="0" id="session" />
+}
+ <h6 class="text-muted font-weight-bold mt-3">Mis Pedidos</h6>
+<div class="row">
+   
+    <div class="col-md-12">
+        <table id="TableVentas" class="table table-sm" width="100%">
+            <thead class="thead-light">
+                <tr>
+                    <th></th>
+                    <th>Nro. Factura</th>
+                    <th>Comprador</th>
+                    <th>Direccion de Envio</th>
+                    <th>Telefono Referencia</th>
+                    <th>Delivery?</th>
+                    <th>Observaciones</th>
+                    <th>Estado</th>
+                    <th>Fecha de Compra</th>
+                    <th>Fecha de Entrega</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <button class="btn btn-sm btn-danger"  title="Ver Factura" value="@item.PkVenta" id="btnPdf" ><i class="fa fa-file-archive"></i></button>
+                            <button class="btn btn-sm btn-primary" title="Ver Detalle" value="@item.PkVenta" id="btnDetalle" ><i class="fa fa-list" ></i></button>
+                        </td>
+                        <td>@item.Codigo</td>
+                        <td>@item.FkUsuarioNavigation.Nombre @item.FkUsuarioNavigation.ApellidoPaterno</td>
+                        <td>@item.Direccion</td>
+                        <td>@item.Telefono</td>
+                        <td>
+                            @if (item.IsDelivery)
+                            {
+                                <span class="badge badge-info">Si</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-secondary">No</span>
+                            }
+                        </td>
+                        <td>@item.Observacion</td>
+                        <td>
+                            @if(item.Estado == 1)
+                            {
+                                <span class="badge badge-success">Entregado</span>
+                            }
+                             else
+                            {
+                               <span class="badge badge-danger">Pendiente</span>
+                            }
+                        </td>
+                        <td>
+                            @item.FechaRegistro
+                        </td>
+                        <td>
+                            @item.FechaEntrega
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-container"></div> <!-- Contenedor del Modal-->
+@section Scripts {
+    <script src="/js/Ventas/_MisCompras.js"></script>
+}

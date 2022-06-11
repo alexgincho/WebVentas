@@ -32,7 +32,7 @@ namespace WebVentas.Models.ModelBD
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=BDVentas; Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=LAPTOP-0Q8CQPEA;Database=BDVentas; Trusted_Connection=True;");
 
             }
         }

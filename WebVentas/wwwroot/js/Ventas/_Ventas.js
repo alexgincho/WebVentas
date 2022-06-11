@@ -151,10 +151,6 @@
 
     }
 
-    //btnProcesar.addEventListener("click", function (e) {
-    //    e.preventDefault();
-    //    RealizarVenta();
-    //});
     FormVentas.submit(function (event) {
         event.preventDefault();
         $.ajax({
@@ -170,6 +166,7 @@
             },
             error: function (error) { console.log(error); }
         });
+        localStorage.clear();
     });
     function RealizarVenta() {
 

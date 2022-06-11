@@ -2,6 +2,10 @@
 using WebVentas.Models.Interfaces;
 using WebVentas.Models.ModelBD;
 using System.Linq;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 namespace WebVentas.Models.Services
 {
     public class VentaService : IVentaService
@@ -80,6 +84,58 @@ namespace WebVentas.Models.Services
                 throw new Exception(ex.Message);
             }
             return codigo;
+        }
+
+        public List<DetalleVentum> GetDetalleList(int id)
+        {
+            List<DetalleVentum> detalles = null;
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var lst = db.DetalleVenta.Where(d => d.FkVenta == id).ToList();
+                    if (lst.Count() > 0)
+                    {
+                        detalles = new List<DetalleVentum>();
+                        detalles = lst;
+                        detalles.ForEach(x => {
+                            x.FkProductoNavigation = db.Productos.Where(p=>p.PkProducto == x.FkProducto).FirstOrDefault();
+                        });
+                    }
+                    else { throw new Exception(); }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return detalles;
+        }
+
+        public List<Ventum> GetVentaList(int id)
+        {
+            List<Ventum> ventas = null;
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var lst = db.Venta.Where(v => v.FkUsuario == id && v.IsDeleted == false).ToList();
+                    if (lst.Count > 0)
+                    {
+                        ventas = new List<Ventum>();
+                        ventas = lst;
+                        ventas.ForEach(x => {
+                            x.FkUsuarioNavigation = db.Usuarios.Where(u=>u.PkUsuario == x.FkUsuario).FirstOrDefault();
+                        });
+                    }
+                    else { throw new Exception(); }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            return ventas;
         }
     }
 }

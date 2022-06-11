@@ -1,9 +1,17 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Http;
+@using WebVentas.Models.Common
+@using WebVentas.Models.ModelBD;
 @{
+    var Usuario = SessionHelper.GetObjectFromJson<Usuario>(Context.Session, "Usuario");
 }
-
+@if(Usuario != null)
+{
+    <input type="hidden" value="@Usuario.PkUsuario" id="session" />
+}
+else
+{
+    <input type="hidden" value="0" id="session" />
+}
 <div class="row mt-3">
     <div class="col-md-9">
         <!-- TABLA CONTENEDORA -->
@@ -15,6 +23,7 @@
                 <th scope="col">FOTO</th>
                 <th scope="col">DESCRIPCION</th>
                 <th scope="col">CANTIDAD</th>
+                <th scope="col">Precio UND</th>
                 <th scope="col">UM</th>
                 <th scope="col">SUB. TOTAL</th>
                 <th scope="col"></th>
@@ -29,6 +38,8 @@
         <hr />
         <div class="card" style="width: 18rem;">
             <div class="card-body">
+                <input type="hidden" id="inputSubtotal_spam" />
+                <input type="hidden" id="inputTotal_spam" />
               <h6 class="card-title list-group-item"><span class="text-muted font-weight-bold">Sub Total :</span> <span id="subTotal"></span> </h6>
 
               <h6 class="card-subtitle mb-2 text-muted font-weight-bold list-group-item">Envio : <span id="Envios">S/ 00.00</span></h6>

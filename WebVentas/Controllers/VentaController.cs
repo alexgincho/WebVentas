@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using WebVentas.Models.Interfaces;
 using WebVentas.Models.ModelVista.response;
 using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Collections.Generic;
 
 namespace WebVentas.Controllers
 {
@@ -65,6 +68,73 @@ namespace WebVentas.Controllers
                 rpta.Data = null;
             }
             //return Ok(JsonConvert.SerializeObject(rpta));
+            return Ok(rpta);
+        }
+        public IActionResult MisCompras()
+        {
+            var idUSer = SessionHelper.GetObjectFromJson<Usuario>(HttpContext.Session, "Usuario");
+            if (idUSer == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            List<Ventum> ventas = new List<Ventum>();
+            ventas = _ventaService.GetVentaList(idUSer.PkUsuario);
+            return View(ventas);
+        }
+        public IActionResult VerDetalle(int id)
+        {
+            List<DetalleVentum> detalle = new List<DetalleVentum>();
+            if(id != 0)
+            {
+                detalle = _ventaService.GetDetalleList(id);
+            }
+            return PartialView("_VerDetalleVenta" , detalle);
+        }
+        [HttpGet]
+        public IActionResult GetVentas()
+        {
+            ResponseData rpta = new ResponseData();
+            try
+            {
+                var idUSer = SessionHelper.GetObjectFromJson<Usuario>(HttpContext.Session, "Usuario");
+                var List = _ventaService.GetVentaList(idUSer.PkUsuario);
+                if(List.Count > 0)
+                {
+                    rpta.Success = true;
+                    rpta.Message = "Ok";
+                    rpta.Data = List;
+                }
+                else { throw new Exception("Sin Pedidos"); }
+            }
+            catch(Exception ex)
+            {
+                rpta.Success = false;
+                rpta.Message = ex.Message;
+                rpta.Data = null;
+            }
+            return Ok(rpta);
+        }
+        [HttpGet]
+        public IActionResult GetDetalle(int id)
+        {
+            ResponseData rpta = new ResponseData();
+            try
+            {
+                var List = _ventaService.GetDetalleList(id);
+                if (List.Count > 0)
+                {
+                    rpta.Success = true;
+                    rpta.Message = "Ok";
+                    rpta.Data = List;
+                }
+                else { throw new Exception("Sin Detalle"); }
+            }
+            catch (Exception ex)
+            {
+                rpta.Success = false;
+                rpta.Message = ex.Message;
+                rpta.Data = null;
+            }
             return Ok(rpta);
         }
     }

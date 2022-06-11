@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -31,7 +32,9 @@ namespace WebVentas.Models.ModelBD
         public DateTime? FechaEdita { get; set; }
         public bool? IsDeleted { get; set; }
 
+        [JsonIgnore]
         public virtual Usuario FkUsuarioNavigation { get; set; }
+        [JsonIgnore]
         public virtual ICollection<DetalleVentum> DetalleVenta { get; set; }
     }
 }

@@ -34,6 +34,7 @@ namespace WebVentas.Models.Services
                             oModel.Descripcion = x.prod.Descripcion;
                             oModel.Cantidad = x.prod.Cantidad;
                             oModel.FkUnidad = x.prod.FkUnidad;
+                            oModel.Imagen = x.prod.Imagen;
                             oModel.PrecioCompra = x.prod.PrecioCompra;
                             oModel.PrecioVenta = x.prod.PrecioVenta;
                             oModel.FkProveedor = x.prod.FkProveedor;
@@ -84,6 +85,7 @@ namespace WebVentas.Models.Services
                          product.NombreProducto = produ.prod.NombreProducto;
                          product.Descripcion = produ.prod.Descripcion;
                          product.Cantidad = produ.prod.Cantidad;
+                         product.Imagen =  produ.prod.Imagen;
                          product.FkUnidad = produ.prod.FkUnidad;
                          product.PrecioCompra = produ.prod.PrecioCompra;
                          product.PrecioVenta = produ.prod.PrecioVenta;

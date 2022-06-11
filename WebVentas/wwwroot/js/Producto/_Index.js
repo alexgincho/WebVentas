@@ -21,6 +21,10 @@
                     let card = document.createElement("div"); card.className = "card"; divContent.appendChild(card);
                     let img = document.createElement("img"); // por definir
 
+                    img.src = v.imagen; img.className = "card-img-top";
+
+                    card.appendChild(img);
+
                     let cardBody = document.createElement("div"); cardBody.className = "card-body";  card.appendChild(cardBody);
                     let cardTitle = document.createElement("h5"); cardTitle.textContent = v.nombreProducto; cardBody.appendChild(cardTitle);
                     let cardSubTitle = document.createElement("small"); cardSubTitle.className = "card-subtitle mb-2 text-muted"; cardSubTitle.textContent = "Categoria : " + v.fkCategoriaNavigation.descripcion; cardBody.appendChild(cardSubTitle);
