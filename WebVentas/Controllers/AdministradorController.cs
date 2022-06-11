@@ -27,5 +27,9 @@ namespace WebVentas.Controllers
         {
             return View();
         }
+        public IActionResult Producto()
+        {
+            return View();
+        }
     }
 }
