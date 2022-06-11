@@ -23,7 +23,9 @@ namespace WebVentas.Controllers
         {
             return View();
         }
-
-
+        public IActionResult Colaboradores()
+        {
+            return View();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using WebVentas.Models.Interfaces;
+using WebVentas.Models.Services;
 using WebVentas.Models.ModelBD;
 using WebVentas.Models.ModelVista.response;
 
@@ -19,6 +20,13 @@ namespace WebVentas.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult MantenimientoPersonal(int id = 0)
+        {
+            Usuario entity = null;
+            ViewBag.Roles = _Rols.GetAllRoles();
+            if (id != 0) entity = _User.Get(id);
+            return PartialView("_MantenimientoPersonal", entity ?? new Usuario());
         }
 
         [HttpPost]
@@ -54,26 +62,77 @@ namespace WebVentas.Controllers
             }
             return Ok(rpta);
         }
-        [HttpGet]
-        public IActionResult GetUsuario(int id)
+
+        [HttpPost]
+        public IActionResult Update([FromBody] Usuario entity)
         {
             ResponseData rpta = new ResponseData();
             try
             {
-                var user = _User.Get(id);
-                if (user != null)
+                if (ModelState.IsValid)
                 {
-                    rpta.Success = true;
-                    rpta.Message = "Ok";
-                    rpta.Data = user;
+                    if (entity.PkUsuario != 0)
+                    {
+                        //var ValidateDni = _sPer.ValidarDniPersonal(entity.Dni);
+                        // if (ValidateDni)
+                        //{
+                        //  throw new Exception("Error. Datos ya Registrados.");
+                        //}
+                        rpta.Data = _User.Update(entity);
+                        rpta.Message = "Success.";
+
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
-                else { throw new Exception(); }
+                else { return BadRequest(); }
+
             }
             catch (Exception ex)
             {
-                rpta.Success = false;
                 rpta.Message = ex.Message;
                 rpta.Data = null;
+            }
+            return Ok(rpta);
+        }
+
+        [HttpPost]
+        public IActionResult DesactivePersonal([FromBody] int id)
+        {
+            ResponseData rpta = new ResponseData();
+            try
+            {
+                var DeletePerson = _User.Delete(id);
+                if (DeletePerson)
+                {
+                    rpta.Data = true;
+                    rpta.Message = "Se Desactivo Personal Correctamente!";
+                }
+                else { throw new Exception("Error. No se pudo desactivar el Personal."); }
+            }
+            catch (Exception ex)
+            {
+                rpta.Data = null;
+                rpta.Message = ex.Message;
+            }
+            return Ok(rpta);
+        }
+
+        [HttpGet]
+        public IActionResult GetAllPersonal()
+        {
+            ResponseData rpta = new ResponseData();
+            try
+            {
+                rpta.Data = _User.GetAll();
+                rpta.Message = "Success.";
+            }
+            catch (Exception ex)
+            {
+                rpta.Data = null;
+                rpta.Message = "Error";
             }
             return Ok(rpta);
         }
