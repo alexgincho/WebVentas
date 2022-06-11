@@ -88,6 +88,7 @@
                 });
             }
         });
+        
     }
     function InvocarModal(id) {
         AbrirModal(`/Producto/VerDetalle/${id ? id : ""}`);
