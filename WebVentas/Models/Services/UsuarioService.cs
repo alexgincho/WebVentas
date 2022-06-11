@@ -10,6 +10,7 @@ using System.Security.Claims;
 using WebVentas.Models.Common;
 using Microsoft.Extensions.Options;
 using WebVentas.Models.ModelVista.response;
+using System.Collections.Generic;
 
 namespace WebVentas.Models.Services
 {
@@ -53,6 +54,119 @@ namespace WebVentas.Models.Services
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+            return result;
+        }
+
+        public List<Usuario> GetAll()
+        {
+            List<Usuario> result = null;
+            string error = "";
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var lst = db.Usuarios.ToList().OrderByDescending(p => p.PkUsuario).ToList();
+                    //var lst = db.Personaladms.Join(
+                    //            db.Roles, p => p.FkRol, 
+                    //            r => r.PkErol, 
+                    //            (p, r) => 
+                    //            new 
+                    //            { 
+                    //                p.Nombre,
+                    //                r.Descripcion
+                    //            });
+                    //var personales = lst.ToList();
+                    if (lst.Count() > 0)
+                    {
+                        result = lst;
+                    }
+                    else { throw new Exception("Error. No hay Personal Administrativo registrado"); }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            return result;
+        }
+
+        public Usuario Get(int id)
+        {
+            Usuario result = null;
+            string error = "";
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var obj = db.Usuarios.Where(u => u.PkUsuario == id);
+                    var usuario = obj.FirstOrDefault();
+                    if (usuario != null)
+                    {
+                        result = usuario;
+                    }
+                    else { throw new Exception("Usuaio no Existe."); }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            return result;
+        }
+        public bool Delete(int id)
+        {
+            bool result = false;
+            string error = "";
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var obj = db.Usuarios.Find(id);
+                    if (obj != null)
+                    {
+                        obj.IsDeleted = true;
+                        obj.FechaEdita = DateTime.Now;
+                        db.SaveChanges();
+                        result = true;
+                    }
+                    else { throw new Exception("Error. Personal Adm no encontrado."); }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            return result;
+        }
+
+        public Usuario Update(Usuario entity)
+        {
+            Usuario result = null;
+            string error = "";
+            try
+            {
+                using (var db = new BDVentasContext())
+                {
+                    var obj = db.Usuarios.Find(entity.PkUsuario);
+                    if (obj != null)
+                    {
+                        obj.NroDocumento = entity.NroDocumento; // Validar Dni no repetidos
+                        obj.Nombre = entity.Nombre;
+                        obj.ApellidoPaterno = entity.ApellidoPaterno;
+                        obj.ApellidoMaterno = entity.ApellidoMaterno;
+                        obj.Direccion = entity.Direccion;
+                        obj.Telefono = entity.Telefono;
+                        obj.Email = entity.Email; // Validar Email no repetidos
+                        db.SaveChanges();
+                        result = entity;
+                    }
+                    else { throw new Exception("Error. Datos no Actualizados"); }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
             }
             return result;
         }

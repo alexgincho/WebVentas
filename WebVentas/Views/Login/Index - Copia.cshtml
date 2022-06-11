@@ -1,0 +1,97 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Iniciar Sesión</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Crear cuenta</button>
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+        <form class="">
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="floatingInput">Email</label>
+                    <input type="email" class="form-control" id="Email-input" placeholder="name@example.com">
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingPassword">Contraseña</label>
+                    <div class="input-group mb-3">
+                        <input class="form-control password block mt-1 w-full" id="Password-input" type="password" name="password" required />
+                        <span class="input-group-text">
+                            <i class="far fa-eye-slash" id="togglePassword"
+                            style="cursor: pointer"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <a class="link-low-sm" href="/account/password/recover/request">
+                        Olvidé mi contraseña
+                    </a>
+                </div>
+            </div>
+
+            <div class="checkbox mb-3">
+            </div>
+            <button class="w-100 btn btn-lg btn-primary col-12" type="button" id="btnLogin">Iniciar Sesion</button>
+        </form>
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+        <form>
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="floatingInput">Nombre</label>
+                    <input type="email" class="form-control" id="Nombre" >
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingInput">Apellido Materno</label>
+                    <input type="email" class="form-control" id="Apellidomaterno" >
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingInput">Apellido Paterno</label>
+                    <input type="email" class="form-control" id="Apellidopaterno" >
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingInput">Telefono</label>
+                    <input type="email" class="form-control" id="Telefono" >
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingInput">Direccion</label>
+                    <input type="email" class="form-control" id="Direccion" >
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingInput">Email</label>
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingPassword">Contraseña</label>
+                    <div class="input-group mb-3">
+                        <input class="form-control password" id="Passwords" class="block mt-1 w-full" type="password" name="Passwords" required />
+                        <span class="input-group-text">
+                            <i class="far fa-eye-slash" id="togglePassword"
+                            style="cursor: pointer"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label for="floatingInput">DNI</label>
+                    <input type="email" class="form-control" id="NroDocumento">
+                </div>
+            </div>
+
+            <div class="checkbox mb-3">
+            </div>
+            <button class="w-100 btn btn-lg btn-primary col-12" type="submit" id="btnProcesas">Completar registro</button>
+        </form>
+  </div>
+</div>
+@section Scripts {
+    <script src="/js/Usuario/_Index.js"></script>
+    <script src="/js/Usuario/_Login.js" ></script>
+}
+
+
+
